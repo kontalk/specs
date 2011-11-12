@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.10deb1
+-- version 3.3.7deb5build0.10.10.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 08 nov, 2011 at 02:48 PM
--- Versione MySQL: 5.1.54
--- Versione PHP: 5.3.5-1ubuntu7.3
+-- Generation Time: Nov 12, 2011 at 11:00 AM
+-- Server version: 5.1.49
+-- PHP Version: 5.3.3-1ubuntu9.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `attachments`
+-- Table structure for table `attachments`
 --
 
 DROP TABLE IF EXISTS `attachments`;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `attachments` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `messages`
+-- Table structure for table `messages`
 --
 
 DROP TABLE IF EXISTS `messages`;
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `servers`
+-- Table structure for table `servers`
 --
 
 DROP TABLE IF EXISTS `servers`;
@@ -73,14 +73,13 @@ CREATE TABLE IF NOT EXISTS `servers` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `usercache`
+-- Table structure for table `usercache`
 --
 
 DROP TABLE IF EXISTS `usercache`;
 CREATE TABLE IF NOT EXISTS `usercache` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
   `timestamp` datetime NOT NULL COMMENT 'Cache entry timestamp',
-  `status` varchar(140) CHARACTER SET utf8 DEFAULT NULL COMMENT 'User status message',
   `google_registrationid` varchar(255) DEFAULT NULL COMMENT 'Google C2DM device registration ID',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Users location cache';
@@ -88,12 +87,12 @@ CREATE TABLE IF NOT EXISTS `usercache` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `validations`
+-- Table structure for table `validations`
 --
 
 DROP TABLE IF EXISTS `validations`;
 CREATE TABLE IF NOT EXISTS `validations` (
-  `userid` char(40) NOT NULL COMMENT 'User ID',
+  `userid` char(48) NOT NULL COMMENT 'User ID',
   `code` char(20) NOT NULL COMMENT 'Verification code',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Verification codes';
