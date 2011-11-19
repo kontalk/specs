@@ -1,0 +1,20 @@
+import "kontalklib/postoffice.proto";
+
+option py_generic_services = true;
+
+message HandshakeMessage {
+    // server protocol version
+    required uint32 protocol = 1;
+    // server fingerprint
+    required string fingerprint = 2;
+    // cleartext token
+    optional string clear_token = 3;
+    // signed token
+    optional string signed_token = 4;
+}
+
+service ServerLinkService {
+    rpc handshake (HandshakeMessage) returns (HandshakeMessage);
+    rpc usercacheLookup (UsercacheLookupRequest) returns (UsercacheLookupResponse);
+    rpc sendMessage (SendMessageRequest) returns (SendMessageResponse);
+}
