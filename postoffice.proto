@@ -1,0 +1,50 @@
+// Postoffice protocol definitions
+
+// TODO this should be in a common proto file
+enum Status {
+    STATUS_SUCCESS = 0;
+    STATUS_ERROR = 1;
+    STATUS_BUSY = 2;
+    STATUS_VERIFICATION_FAILED = 3;
+    STATUS_INVALID_PHONE_NUMBER = 4;
+    STATUS_TTL_EXPIRED = 5;
+    STATUS_USER_NOTFOUND = 6;
+    STATUS_MESSAGE_NOTFOUND = 7;
+}
+
+
+message BoxContainer {
+  required string name = 1;
+  required bytes value = 2;
+}
+
+message UsercacheLookupRequest {
+    // requested users
+    repeated string user_id = 3;
+}
+
+message UsercacheLookupResponse {
+    // matched users
+    message User {
+        required string user_id = 1;
+        optional uint64 timestamp = 2;
+    }
+    repeated User user = 3;
+}
+
+message SendMessageRequest {
+    required string id = 1;
+    optional string original_id = 2;
+    required string sender = 3;
+    required string recipient = 4;
+    optional string group = 5;
+    required string mime = 6;
+    required bytes content = 7;
+    optional bool encrypted = 8;
+    optional string url = 9;
+    required uint32 ttl = 10;
+}
+
+message SendMessageResponse {
+    required Status status = 1;
+}
