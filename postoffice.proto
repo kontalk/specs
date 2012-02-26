@@ -51,4 +51,11 @@ message SendMessageResponse {
 }
 
 message MessageQueueRequest {
+    // used for postoffice-driven message polling {
+    optional string user_id = 1;
+    // }
+}
+
+message MessageQueueResponse {
+    required uint32 message_count = 1;
 }
