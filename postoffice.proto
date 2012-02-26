@@ -28,6 +28,7 @@ message UsercacheLookupResponse {
     message User {
         required string user_id = 1;
         optional uint64 timestamp = 2;
+        optional string status = 3;
     }
     repeated User user = 3;
 }
@@ -47,4 +48,7 @@ message SendMessageRequest {
 
 message SendMessageResponse {
     required Status status = 1;
+}
+
+message MessageQueueRequest {
 }
