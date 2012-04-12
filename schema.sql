@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2011 at 11:00 AM
--- Server version: 5.1.49
--- PHP Version: 5.3.3-1ubuntu9.6
+-- Generato il: Apr 12, 2012 alle 09:49
+-- Versione del server: 5.5.22
+-- Versione PHP: 5.3.10-1ubuntu2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -22,27 +23,27 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attachments`
+-- Struttura della tabella `attachments`
 --
 
-DROP TABLE IF EXISTS `attachments`;
-CREATE TABLE IF NOT EXISTS `attachments` (
+CREATE TABLE `attachments` (
   `userid` char(40) NOT NULL COMMENT 'User ID',
   `filename` varchar(255) NOT NULL COMMENT 'Filename relative to the server local storage',
   `mime` varchar(50) NOT NULL COMMENT 'Mime type',
+  `md5sum` varchar(32) NOT NULL COMMENT 'File MD5 sum',
   PRIMARY KEY (`userid`,`filename`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Attachments catalog';
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Struttura della tabella `messages`
 --
 
-DROP TABLE IF EXISTS `messages`;
-CREATE TABLE IF NOT EXISTS `messages` (
-  `id` char(64) NOT NULL COMMENT 'Message ID',
+CREATE TABLE `messages` (
+  `id` char(30) NOT NULL COMMENT 'Message ID',
   `orig_id` char(64) DEFAULT NULL COMMENT 'Originating message ID',
+  `timestamp` datetime NOT NULL COMMENT 'Message timestamp',
   `sender` char(48) NOT NULL COMMENT 'Sender (user id + resource)',
   `recipient` char(48) NOT NULL COMMENT 'Recipient (user id + resource)',
   `group` char(10) DEFAULT NULL COMMENT 'Group ID',
@@ -51,35 +52,35 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `encrypted` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Encrypted message flag',
   `filename` varchar(255) DEFAULT NULL COMMENT 'Message content filename (if any)',
   `ttl` smallint(3) DEFAULT NULL COMMENT 'Message time-to-live',
-  `local_lock` datetime DEFAULT NULL COMMENT 'Last lock time by polling server',
-  `remote_lock` datetime DEFAULT NULL COMMENT 'Last lock time by daemon',
+  `need_ack` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Need ack indicator',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Transiting messages';
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `servers`
+-- Struttura della tabella `servers`
 --
 
-DROP TABLE IF EXISTS `servers`;
-CREATE TABLE IF NOT EXISTS `servers` (
+CREATE TABLE `servers` (
   `fingerprint` char(40) NOT NULL COMMENT 'Server key fingerprint',
-  `address` varchar(255) NOT NULL COMMENT 'Server address',
-  `serverlink` varchar(100) DEFAULT NULL COMMENT 'Serverlink address',
+  `host` varchar(100) NOT NULL COMMENT 'Server host',
+  `port` smallint(6) DEFAULT NULL COMMENT 'Client port',
+  `http_port` smallint(6) DEFAULT NULL COMMENT 'Client HTTP port',
+  `serverlink_port` smallint(6) DEFAULT NULL COMMENT 'Serverlink port',
   PRIMARY KEY (`fingerprint`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Servers';
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usercache`
+-- Struttura della tabella `usercache`
 --
 
-DROP TABLE IF EXISTS `usercache`;
-CREATE TABLE IF NOT EXISTS `usercache` (
+CREATE TABLE `usercache` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
-  `timestamp` datetime NOT NULL COMMENT 'Cache entry timestamp',
+  `timestamp` datetime DEFAULT NULL COMMENT 'Cache entry timestamp',
+  `status` varchar(140) CHARACTER SET utf8 DEFAULT NULL COMMENT 'User status message',
   `google_registrationid` varchar(255) DEFAULT NULL COMMENT 'Google C2DM device registration ID',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Users location cache';
@@ -87,12 +88,15 @@ CREATE TABLE IF NOT EXISTS `usercache` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `validations`
+-- Struttura della tabella `validations`
 --
 
-DROP TABLE IF EXISTS `validations`;
-CREATE TABLE IF NOT EXISTS `validations` (
+CREATE TABLE `validations` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
   `code` char(20) NOT NULL COMMENT 'Verification code',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Verification codes';
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
