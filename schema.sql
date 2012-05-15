@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Apr 12, 2012 alle 09:49
+-- Generato il: Mag 15, 2012 alle 10:53
 -- Versione del server: 5.5.22
--- Versione PHP: 5.3.10-1ubuntu2
+-- Versione PHP: 5.3.10-1ubuntu3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -93,7 +93,7 @@ CREATE TABLE `usercache` (
 
 CREATE TABLE `validations` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
-  `code` char(20) NOT NULL COMMENT 'Verification code',
+  `code` char(6) NOT NULL COMMENT 'Verification code',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Verification codes';
 
