@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Mag 15, 2012 alle 10:53
--- Versione del server: 5.5.22
--- Versione PHP: 5.3.10-1ubuntu3.1
+-- Generato il: Giu 25, 2012 alle 10:21
+-- Versione del server: 5.5.24
+-- Versione PHP: 5.3.10-1ubuntu3.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -53,7 +53,8 @@ CREATE TABLE `messages` (
   `filename` varchar(255) DEFAULT NULL COMMENT 'Message content filename (if any)',
   `ttl` smallint(3) DEFAULT NULL COMMENT 'Message time-to-live',
   `need_ack` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Need ack indicator',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `recipient` (`recipient`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Transiting messages';
 
 -- --------------------------------------------------------
