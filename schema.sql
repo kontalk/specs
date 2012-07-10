@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Giu 25, 2012 alle 10:21
+-- Generato il: Lug 10, 2012 alle 13:46
 -- Versione del server: 5.5.24
 -- Versione PHP: 5.3.10-1ubuntu3.2
 
@@ -31,6 +31,7 @@ CREATE TABLE `attachments` (
   `filename` varchar(255) NOT NULL COMMENT 'Filename relative to the server local storage',
   `mime` varchar(50) NOT NULL COMMENT 'Mime type',
   `md5sum` varchar(32) NOT NULL COMMENT 'File MD5 sum',
+  `timestamp` datetime DEFAULT NULL COMMENT 'Upload/last download time',
   PRIMARY KEY (`userid`,`filename`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Attachments catalog';
 
