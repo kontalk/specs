@@ -1,8 +1,16 @@
-// Client protocol definitions - revision 3
+// Client protocol definitions - revision 4
 option java_package = "org.kontalk.client";
 option java_outer_classname = "Protocol";
 option optimize_for = LITE_RUNTIME;
 
+// user status flags
+enum UserStatusFlags {
+    FLAG_NONE = 0;
+    FLAG_HIDE_PRESENCE = 1;
+    FLAG_HIDE_TYPING = 2;
+}
+
+// old handshake login protocol
 
 // authentication request
 message AuthenticateRequest {
@@ -13,6 +21,38 @@ message AuthenticateRequest {
 message AuthenticateResponse {
     required bool valid = 1;
 }
+
+// new handshake login protocol
+
+// server info - sent by server on connection
+message ServerInfo {
+    required string version = 1;
+    required uint32 client_protocol = 2;
+    required string fingerprint = 4;
+    optional string network = 5;
+    // supported features
+    repeated string supports = 6;
+}
+
+// login request - sent by client on connection
+message LoginRequest {
+    required string token = 1;
+    optional uint32 client_protocol = 2;
+    optional string client_version = 3;
+    optional uint32 flags = 4;
+}
+
+// login response - in reply of Login
+message LoginResponse {
+    enum LoginStatus {
+        STATUS_LOGGED_IN = 0;
+        STATUS_ERROR = 1;
+        STATUS_PROTOCOL_MISMATCH = 2;
+        STATUS_AUTH_FAILED = 3;
+    }
+    required LoginStatus status = 1;
+}
+
 
 // message post request
 message MessagePostRequest {
@@ -164,7 +204,9 @@ message FileUploadResponse {
 
 // server info request
 message ServerInfoRequest {
+    // deprecated (now in AuthenticateRequest)
     optional uint32 client_protocol = 1;
+    // deprecated (now in AuthenticateRequest)
     optional string client_version = 2;
 }
 
@@ -176,12 +218,14 @@ message ServerInfoResponse {
     required string fingerprint = 4;
     // supported features
     repeated string supports = 5;
+    optional string network = 6;
 }
 
 // user update request
 message UserInfoUpdateRequest {
     optional string status_message = 1;
     optional string google_registration_id = 2;
+    optional uint32 flags = 3;
 }
 
 // user update response
@@ -253,4 +297,19 @@ message Ping {
 message Pong {
     // utc timestamp
     optional uint64 timestamp = 1;
+}
+
+// re-validation request (new validation code)
+message ValidationCodeRequest {
+    // dummy request
+}
+
+// re-validation response (new validation code)
+message ValidationCodeResponse {
+    enum ValidationCodeStatus {
+        STATUS_SUCCESS = 0;
+        STATUS_ERROR = 1;
+    }
+    required ValidationCodeStatus status = 1;
+    optional string code = 2;
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Set 14, 2012 alle 02:36
+-- Generato il: Set 25, 2012 alle 17:16
 -- Versione del server: 5.5.24
--- Versione PHP: 5.4.4-7
+-- Versione PHP: 5.3.10-1ubuntu3.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -43,8 +43,8 @@ CREATE TABLE `attachments` (
 --
 
 CREATE TABLE `messages` (
-  `id` char(64) NOT NULL COMMENT 'Message ID',
-  `orig_id` char(64) DEFAULT NULL COMMENT 'Originating message ID',
+  `id` char(30) NOT NULL COMMENT 'Message ID',
+  `orig_id` char(30) DEFAULT NULL COMMENT 'Originating message ID',
   `timestamp` datetime NOT NULL COMMENT 'Message timestamp',
   `sender` char(48) NOT NULL COMMENT 'Sender (user id + resource)',
   `recipient` char(48) NOT NULL COMMENT 'Recipient (user id + resource)',
@@ -54,8 +54,9 @@ CREATE TABLE `messages` (
   `encrypted` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Encrypted message flag',
   `filename` varchar(255) DEFAULT NULL COMMENT 'Message content filename (if any)',
   `ttl` smallint(3) DEFAULT NULL COMMENT 'Message time-to-live',
-  `need_ack` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'Need ack flag',
-  PRIMARY KEY (`id`)
+  `need_ack` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Need ack indicator',
+  PRIMARY KEY (`id`),
+  KEY `recipient` (`recipient`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Transiting messages';
 
 -- --------------------------------------------------------
@@ -81,9 +82,10 @@ CREATE TABLE `servers` (
 
 CREATE TABLE `usercache` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
-  `timestamp` datetime NOT NULL COMMENT 'Cache entry timestamp',
-  `status` varchar(140) CHARACTER SET utf8 DEFAULT NULL,
+  `timestamp` datetime DEFAULT NULL COMMENT 'Cache entry timestamp',
+  `status` varchar(140) CHARACTER SET utf8 DEFAULT NULL COMMENT 'User status message',
   `google_registrationid` varchar(255) DEFAULT NULL COMMENT 'Google C2DM device registration ID',
+  `flags` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Status flags',
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COMMENT='Users location cache';
 
@@ -95,7 +97,7 @@ CREATE TABLE `usercache` (
 
 CREATE TABLE `validations` (
   `userid` char(48) NOT NULL COMMENT 'User ID',
-  `code` char(20) NOT NULL COMMENT 'Verification code',
+  `code` char(6) NOT NULL COMMENT 'Verification code',
   `timestamp` datetime DEFAULT NULL COMMENT 'Validation code timestamp',
   PRIMARY KEY (`userid`),
   UNIQUE KEY `code` (`code`)
