@@ -51,6 +51,8 @@ message LoginResponse {
         STATUS_AUTH_FAILED = 3;
     }
     required LoginStatus status = 1;
+    // set only if status is STATUS_LOGGED_IN
+    optional string user_id = 2;
 }
 
 
