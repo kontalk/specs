@@ -13,3 +13,4 @@ its clients and server.
 4. [Push notifications capability](push.md)
 5. [Public key presence subscription extension](publickey.md)
 6. [Kontalk in-band registration](register.md)
+7. [Group chat](group.md)

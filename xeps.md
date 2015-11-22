@@ -12,3 +12,4 @@ Future plans include:
 
 * [XEP-0186: Invisible Command](http://xmpp.org/extensions/xep-0186.html)
 * [XEP-0333: Chat Markers](http://xmpp.org/extensions/xep-0333.html)
+* [XEP-0033: Extended Stanza Addressing](http://xmpp.org/extensions/xep-0033.html)
