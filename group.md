@@ -9,7 +9,7 @@ The `<group/>` extension must always include a group ID and the JID of the owner
 
 ## Creating groups
 A user that wants to initiate a group sends a group opening command to all participants by using a message stanza, indicating a group ID and optionally a group subject. Participants list is indicated in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
-All messages must be sent to an entity called `multicast.[hostname]`.
+All messages must be sent to an entity called `multicast.[hostname]` (*we should probably use service discovery for this*).
 
 ```xml
 <message type='groupchat' from='david@beta.kontalk.net/home' to='multicast.beta.kontalk.net'>
