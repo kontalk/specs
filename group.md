@@ -4,11 +4,11 @@
 
 ## Protocol overview
 Instead of relying on the server to manage groups, we decided to let clients do the job. Every administrative task is carried out by clients. Group chat in Kontalk is more of a self-controlled group of people.  
-All messages are multicasted to the other participants through [XEP-0033](http://xmpp.org/extensions/xep-0033.html).
+All messages are multicasted to the other participants through [XEP-0033](http://xmpp.org/extensions/xep-0033.html) and must have type *groupchat* (*do we need this?*).
 The `<group/>` extension must always include a group ID and the JID of the owner (i.e. who created the group).
 
 ## Creating groups
-A user that wants to initiate a group sends a create command to all participants by using a special message stanza, indicating a group ID and optionally a group name. Participants list is indicated in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
+A user that wants to initiate a group sends a group opening command to all participants by using a message stanza, indicating a group ID and optionally a group subject. Participants list is indicated in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
 All messages must be sent to an entity called `multicast.[hostname]`.
 
 ```xml
@@ -103,7 +103,7 @@ Because this protocol is completely controlled by clients, a client must be impl
 
 * Ignoring add/remove group commands from any user but the owner
 * Ignoring any message stanza that has a group ID but a different owner than the one expected
-* ...
+* Discarding any messages from non-members
 
 ## Encryption
 All group stanzas are encrypted using a multirecipient key as of OpenPGP specification. The only thing that must be kept in cleartext is the XEP-0033 address list, which must be read by the server so it can deliver the message to all users. However group ID and all other information can and should be encrypted.
