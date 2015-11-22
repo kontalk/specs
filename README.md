@@ -14,3 +14,4 @@ its clients and server.
 5. [Public key presence subscription extension](publickey.md)
 6. [Kontalk in-band registration](register.md)
 7. [Group chat](group.md)
+8. Encryption
