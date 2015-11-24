@@ -4,7 +4,7 @@
 
 ## Protocol overview
 Instead of relying on the server to manage groups, we decided to let clients do the job. Every administrative task is carried out by clients. Group chat in Kontalk is more of a self-controlled group of people.  
-All messages are multicasted to the other participants through [XEP-0033](http://xmpp.org/extensions/xep-0033.html) and must have type *groupchat* (*do we need this?*).
+All messages are multicasted to the other participants through [XEP-0033](http://xmpp.org/extensions/xep-0033.html) (*I recommend separating this from 0033*) - this is not part of the group extension protocol but allows a client to reach every group member by sending only one message - and must have type *groupchat* (*do we need this?*) (*no, why? These are not MUC messages, the type should be 'chat'*).
 The `<group/>` extension must always include a group ID and the JID of the owner (i.e. who created the group).
 
 ## Creating groups
@@ -54,8 +54,12 @@ The group creator can add users by sending a group command:
   </addresses>
   <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net'>
     <add jid='charlie@beta.kontalk.net'/>
+  <!-- including subject and list of unchanged members for the new member -->
+    <subject>Our great journey</subject>
+    <member jid='alice@beta.kontalk.net'/>
+    <member jid='bob@beta.kontalk.net'/>    
   </group>
-  <!-- optionally, a message can be included -->
+  <!-- optionally, a message can be included -->    
   <body>Welcome Charlie!</body>
 </message>
 ```
