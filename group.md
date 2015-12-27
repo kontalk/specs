@@ -12,7 +12,7 @@ A user that wants to initiate a group sends a group opening command to all parti
 All messages must be sent to an entity called `multicast.[hostname]` (*we should probably use service discovery for this*).
 
 ```xml
-<message type='groupchat' from='david@beta.kontalk.net/home' to='multicast.beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='multicast.beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
@@ -31,7 +31,7 @@ All messages must be sent to an entity called `multicast.[hostname]` (*we should
 Any user that wants to send a message to the group can send a normal message stanza to all participants using XEP-0033 as usual. The group ID and owner must be included in every message.
 
 ```xml
-<message type='groupchat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
@@ -45,7 +45,7 @@ Any user that wants to send a message to the group can send a normal message sta
 The group creator can add users by sending a group command:
 
 ```xml
-<message type='groupchat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
@@ -68,7 +68,7 @@ The group creator can add users by sending a group command:
 The group creator can remove users by sending a group command:
 
 ```xml
-<message type='groupchat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
@@ -86,7 +86,7 @@ The group creator can remove users by sending a group command:
 If a user wants to leave a group, the user must send a part command:
 
 ```xml
-<message type='groupchat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
