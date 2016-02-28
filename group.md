@@ -102,7 +102,7 @@ If a user wants to leave a group, the user must send a part command:
 
 When the other users receive this command, they should not consider the sender to be part of the group anymore and stop sending messages to that user.
 
-## Security concerns
+## Security considerations
 Because this protocol is completely controlled by clients, a client must be implemented to correctly interpret and carry out protocol commands in a secure way, filtering unsolicited or unwanted stanzas if necessary, including:
 
 * Ignoring add/remove group commands from any user but the owner
