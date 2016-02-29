@@ -6,13 +6,13 @@
 Instead of relying on the server to manage groups, we decided to let clients do the job. Every administrative task is carried out by clients. Group chat in Kontalk is more of a self-controlled group of people.  
 All messages are multicasted to the other participants through [XEP-0033](http://xmpp.org/extensions/xep-0033.html). Although this is not strictly a part of the group extension protocol, it allows a client to reach every group member by sending only one message.
 The `<group/>` extension must always include a group ID and the JID of the owner (i.e. who created the group).
+All messages must be sent to the entity called `[hostname]` (TODO: service discovery will be used for this).
 
 ## Creating groups
 A user that wants to initiate a group sends a group opening command to all participants by using a message stanza, indicating a group ID and optionally a group subject. Participants list is indicated in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
-All messages must be sent to an entity called `multicast.[hostname]` (*we should probably use service discovery for this*).
 
 ```xml
-<message type='chat' from='david@beta.kontalk.net/home' to='multicast.beta.kontalk.net'>
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
   <addresses xmlns='http://jabber.org/protocol/address'>
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
@@ -42,7 +42,7 @@ Any user that wants to send a message to the group can send a normal message sta
 ```
 
 ## Adding users to the group
-The group creator can add users by sending a group command:
+The group creator can add users by sending a creation command:
 
 ```xml
 <message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
@@ -53,11 +53,11 @@ The group creator can add users by sending a group command:
     <address type='to' jid='charlie@beta.kontalk.net'/>
   </addresses>
   <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net'>
-    <add jid='charlie@beta.kontalk.net'/>
-  <!-- including subject and list of unchanged members for the new member -->
+    <!-- including subject and list of all members -->
     <subject>Our great journey</subject>
-    <member jid='alice@beta.kontalk.net'/>
-    <member jid='bob@beta.kontalk.net'/>
+    <add jid='charlie@beta.kontalk.net'/>
+    <add jid='alice@beta.kontalk.net'/>
+    <add jid='bob@beta.kontalk.net'/>
   </group>
   <!-- optionally, a message can be included -->    
   <body>Welcome Charlie!</body>
