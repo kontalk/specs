@@ -9,7 +9,7 @@ The `<group/>` extension must always include a group ID and the JID of the owner
 All messages must be sent to the entity called `[hostname]` (TODO: service discovery will be used for this).
 
 ## Creating groups
-A user that wants to initiate a group sends a group opening command to all participants by using a message stanza, indicating a group ID and optionally a group subject. Participants list is indicated in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
+A user who wants to initiate a group sends a group opening command with the type `create` to all participants by using a message stanza, indicating a group ID and optionally a group subject. The participants list is included in the address list by using XEP-0033 - which will be stripped out by the server - and also in the `<group/>` child.  
 
 ```xml
 <message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
@@ -17,10 +17,10 @@ A user that wants to initiate a group sends a group opening command to all parti
     <address type='to' jid='alice@beta.kontalk.net'/>
     <address type='to' jid='bob@beta.kontalk.net'/>
   </addresses>
-  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net'>
+  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net' type='create'>
     <subject>Our great journey</subject>
-    <add jid='alice@beta.kontalk.net'/>
-    <add jid='bob@beta.kontalk.net'/>
+    <member jid='alice@beta.kontalk.net'/>
+    <member jid='bob@beta.kontalk.net'/>
   </group>
   <!-- an opening message can be sent using a body child, but it's entirely optional -->
   <body>Hey folks!</body>
@@ -41,8 +41,11 @@ Any user that wants to send a message to the group can send a normal message sta
 </message>
 ```
 
-## Adding users to the group
-The group creator can add users by sending a creation command:
+## Modifying group settings
+
+The group creator can change group settings by sending a group command with the type `set`.
+
+### Adding users to the group
 
 ```xml
 <message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
@@ -52,20 +55,19 @@ The group creator can add users by sending a creation command:
     <!-- this is the new participant -->
     <address type='to' jid='charlie@beta.kontalk.net'/>
   </addresses>
-  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net'>
+  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net' type='set'>
     <!-- including subject and list of all members -->
     <subject>Our great journey</subject>
     <add jid='charlie@beta.kontalk.net'/>
-    <add jid='alice@beta.kontalk.net'/>
-    <add jid='bob@beta.kontalk.net'/>
+    <member jid='alice@beta.kontalk.net'/>
+    <member jid='bob@beta.kontalk.net'/>
   </group>
   <!-- optionally, a message can be included -->    
   <body>Welcome Charlie!</body>
 </message>
 ```
 
-# Removing users from the group
-The group creator can remove users by sending a group command:
+### Removing users from the group
 
 ```xml
 <message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
@@ -74,11 +76,28 @@ The group creator can remove users by sending a group command:
     <address type='to' jid='bob@beta.kontalk.net'/>
     <address type='to' jid='charlie@beta.kontalk.net'/>
   </addresses>
-  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net'>
+  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net' type='set'>
     <remove jid='charlie@beta.kontalk.net'/>
   </group>
   <!-- optionally, a message can be included -->
   <body>Sorry Charlie, you're out.</body>
+</message>
+```
+
+### Changing the group subject
+
+```xml
+<message type='chat' from='david@beta.kontalk.net/home' to='beta.kontalk.net'>
+  <addresses xmlns='http://jabber.org/protocol/address'>
+    <address type='to' jid='alice@beta.kontalk.net'/>
+    <address type='to' jid='bob@beta.kontalk.net'/>
+    <address type='to' jid='charlie@beta.kontalk.net'/>
+  </addresses>
+  <group xmlns='http://kontalk.org/extensions/message#group' id='GROUP-ID' owner='david@beta.kontalk.net' type='set'>
+    <subject>Our journey continues</subject>
+  </group>
+  <!-- optionally, a message can be included -->    
+  <body>Keep on rocking!</body>
 </message>
 ```
 
