@@ -7,6 +7,7 @@ We use several standard and experimental XEPs throughout Kontalk.
 * [XEP-0066: Out of Band Data](http://www.xmpp.org/extensions/xep-0066.html)
 * [XEP-0231: Bits of Binary](http://xmpp.org/extensions/xep-0231.html)
 * [XEP-0191: Blocking Command](http://xmpp.org/extensions/xep-0191.html)
+* [XEP-0363: HTTP File Upload](http://xmpp.org/extensions/xep-0363.html)
 
 Future plans include:
 
