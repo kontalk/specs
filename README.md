@@ -14,3 +14,5 @@ its clients and server.
 5. [Kontalk in-band registration](register.md)
 6. [Group chat](group.md)
 7. [Encryption](encryption.md)
+8. [Roster match](roster-match.md)
+9. [Network information](network-info.md)
