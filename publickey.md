@@ -6,7 +6,7 @@ When a user wants to subscribe to someone else's presence, it sends a presence w
 <presence type='subscribe' from='alice@example.com' to='bob@example.com'>
   <pubkey xmlns='urn:xmpp:pubkey:2'>
     <key>[Base64-encoded public key block]</key>
-    <print>[key fingerprint]</print>
+    <print>[key fingerprint in HEX digits without spaces]</print>
   </pubkey>
 </presence>
 ```
