@@ -7,7 +7,7 @@ whole network and returns matches.
 
 ## Service discovery
 
-When requesting discovery items, the probe component will show up:
+When requesting discovery items to the XMPP service name, the probe component will show up:
 
 ```xml
 <iq type="result" to="alice@beta.kontalk.net/wonderland" id="41VKi-7" from="beta.kontalk.net">
