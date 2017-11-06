@@ -17,3 +17,4 @@ its clients and server.
 8. [Encryption](encryption.md)
 9. [Roster match](roster-match.md)
 10. [Network information](network-info.md)
+11. [Phone number hash format](phone-hash.md)
