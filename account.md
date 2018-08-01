@@ -49,7 +49,7 @@ be used from another device to retrieve the private key:
 ## Private key retrieval
 
 To request a previously stored private key, send a request to the server with
-a private token:
+a private key token:
 
 ```xml
 <iq id='iq-BCH321' type='get' to='prime.kontalk.net'>
