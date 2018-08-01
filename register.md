@@ -133,9 +133,3 @@ If the verification is successful, the server replies with a signed public key t
 ```
 
 You can now close the stream and initiate a new connection with a new certificate embedding the signed public key.
-
----
-
-A registration-like form is also used to register a new public key for the user, in case the previous one has been compromised.
-
-TODO
